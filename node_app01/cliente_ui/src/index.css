@@ -15,8 +15,15 @@ code {
 
 h1,
 h3,
-ul {
+ul,
+input {
   text-align: center;
+}
+
+button,
+input {
+  display: flex;
+  margin: auto;
 }
 
 ul {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-function UsuariosList() {
+function UsuariosList({chave}) {
     const [usuarios, setUsuarios] = useState([])
 
     const fetchUsuarios = async () => {
@@ -11,7 +11,7 @@ function UsuariosList() {
 
     useEffect(() => {
         fetchUsuarios()
-    }, [])
+    }, [chave])
 
     return (
         <div>
