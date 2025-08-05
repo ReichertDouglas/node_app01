@@ -16,7 +16,8 @@ code {
 h1,
 h3,
 ul,
-input {
+input,
+p {
   text-align: center;
 }
 
