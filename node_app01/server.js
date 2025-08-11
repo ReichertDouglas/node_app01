@@ -60,14 +60,14 @@ app.delete('/usuarios/:id', (req, res) => {
     res.json({ message: `Usuário ${id} deletado com sucesso` })
 })
 
-app.put('/usuarios/:id:nome', (req, res) => {
+app.put('/usuarios/:id', (req, res) => {
     const { id } = req.params.id
-    const { nome } = req.body.nome
+    const { nome } = req.params.nome
 
     if (parseInt(id) !== usuarios.id) {
         return res.status(400).json({ message: 'ID do usuário não corresponde' })
     }
 
     usuario[id].nome = nome
-    res.jason({message: `Usuário ${id} atualizado com sucesso`, usuario })
+    res.json({message: `Usuário ${id} atualizado com sucesso`, usuario })
 })
