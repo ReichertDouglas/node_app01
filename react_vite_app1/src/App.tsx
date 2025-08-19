@@ -12,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <main>
+      <main className="bg-gradient-to-r from-red-200 to-purple-700 min-h-screen">
         <Routes>
           <Route path="/" element={<MainPage/>}></Route>
           <Route path="/sobre" element={<About />}></Route>
