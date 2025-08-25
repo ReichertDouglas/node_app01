@@ -21,6 +21,9 @@ export default function Nav() {
         <li className="hover:cursor-pointer">
           <Link to="/contatos">Contatos</Link>
         </li>
+        <li className="hover:cursor-pointer">
+          <Link to="/mensagens">Mensagens</Link>
+        </li>
       </ul>
       {/* menu mobile */}
       <div className="sm:hidden fixed bottom-4 right-4 z-50">
@@ -46,6 +49,9 @@ export default function Nav() {
             </li>
             <li className="hover:cursor-pointer hover:scale-105">
               <Link to="/contatos">Contatos</Link>
+            </li>
+            <li className="hover:cursor-pointer hover:scale-105">
+              <Link to="/mensagens">Mensagens</Link>
             </li>
           </ul>
         )}

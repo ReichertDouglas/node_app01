@@ -8,6 +8,7 @@ import Footer from "./components/footer";
 
 const MainPage = React.lazy(() => import("./pages/mainpage"));
 const ContactPage = React.lazy(() => import("./pages/contact"));
+const MessagePage = React.lazy(() => import("./pages/messagepage"));
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/sobre" element={<About />}></Route>
             <Route path="/servicos" element={<Services />}></Route>
             <Route path="/contatos" element={<ContactPage />}></Route>
+            <Route path="/mensagens" element={<MessagePage />}></Route>
           </Routes>
         </Suspense>
       </main>
