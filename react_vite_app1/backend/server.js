@@ -25,6 +25,17 @@ app.get('/mensagens', (req, res) => {
     res.json(mensagens)
 })
 
+app.get('/mensagens/:id', (req, res) => {
+    const mensagens = readMessage()
+    const id = parseInt(req.params.id)
+    const mensagem = mensagens.find((msg)=>msg.id === id)
+    if ( mensagem ){
+        res.json(mensagem)
+    } else {
+        res.status(404).json({ error : "Mensagem não encontrada"})
+    }
+})
+
 app.post('/mensagens', (req, res) => {
     const mensagens = readMessage()
     const formData = req.body
@@ -35,4 +46,25 @@ app.post('/mensagens', (req, res) => {
     mensagens.push(novaMensagem);
     writeMessage(mensagens)
     res.status(201).json(novaMensagem)
+})
+
+app.put('/mensagem/:id', (req, res) => {
+    let mensagens = readMessage()
+    const id = parseInt(req.params.id)
+    const index = mensagens.findIndex((msg) => msg.id === id)
+    if (index !== -1) {
+        mensagens[index] = { id, ...req.body }
+        writeMessage(mensagens)
+        res.json(mensagens[index])
+    } else {
+        res.status(404).json({ error: "Mensagem não encontrada"})
+    }
+})
+
+app.delete('/mensagens/:id', (req, res) =>{
+    let mensagens = readMessage()
+    const id = parseInt(req.params.id)
+    const novaMensagem = mensagens.filter((msg) => msg.id !== id)
+    writeMessage(novaMensagem)
+    res.status(204).end()
 })
