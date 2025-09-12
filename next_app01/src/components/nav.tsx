@@ -2,7 +2,7 @@ import Link from "next/link";
 // import { useState } from "react";
 
 const navLinks = [
-    {href:"/", label: "Home"},
+    {href:"/home", label: "Home"},
     {href:"/empresa", label: "Empresa"},
     {href:"/servicos", label: "Serviços"},
 ]

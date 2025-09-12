@@ -1,4 +1,4 @@
 
-export const PHONE_MASK = "(99) 99999-9999";
-export const CPF_MASK = "999.999.999-99";
-export const CEP_MASK = "99999-999";
+export const PHONE_MASK = "(00) 00000-0000";
+export const CPF_MASK = "000.000.000-00";
+export const CEP_MASK = "00000-000";
