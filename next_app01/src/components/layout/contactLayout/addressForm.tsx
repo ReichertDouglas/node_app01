@@ -6,6 +6,7 @@ import { CEP_MASK } from "@/lib/mask/formMask";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IMaskInput } from "react-imask";
+import { handleValidCPF } from "@/lib/service/api/apicpf";
 
 
 export default function AddressForm() {
@@ -49,7 +50,7 @@ export default function AddressForm() {
                 className="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 placeholder="000.000.000-00"
                 onBlur={async (e) => {
-                  const message = await handelValidCPF(e.currentTarget.value);
+                  const message = await handleValidCPF(e.currentTarget.value);
                   setError("cpf", {type: "manual", message})
                 }}
               />
