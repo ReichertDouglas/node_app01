@@ -1,34 +1,16 @@
 "use client";
 
 import { User, IdCard, Mail, PhoneCall } from "lucide-react";
-import { contactFormSchema, type ContactFormData } from "@/lib/validator/formValidator";
 import { CPF_MASK, PHONE_MASK } from "@/lib/mask/formMask";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller } from "react-hook-form";
 import { IMaskInput } from "react-imask";
 import { handleValidCPF } from "@/lib/service/api/apicpf";
+import { FormComponentProps } from "./contactSection";
 
-export default function ContactForm() {
-  const {
-    handleSubmit,
-    setError,
-    control,
-    formState: { errors },
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: { name: "", email: "", cpf: "", phone: "" },
-  });
-
-  const handleSubmitContact = (data: ContactFormData) => {
-    console.log("Dados enviados com sucesso", data);
-    return new Promise((resolve) => setTimeout(resolve, 2000));
-  };
-
+  export default function ContactForm({ control, formState, setError }: FormComponentProps) {
+  const { errors } = formState;
   return (
-    <form
-      className="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto text-center"
-      onSubmit={handleSubmit(handleSubmitContact)}
-    >
+    <>
       <div>
         <label className="block text-gray-700 font-bold" htmlFor="name">
           Nome
@@ -76,7 +58,7 @@ export default function ContactForm() {
                 placeholder="000.000.000-00"
                 onBlur={async (e) => {
                   const message = await handleValidCPF(e.currentTarget.value);
-                  setError("cpf", {type: "manual", message})
+                  setError("cpf", { type: "manual", message });
                 }}
               />
             )}
@@ -139,9 +121,6 @@ export default function ContactForm() {
           <p className="mt-2 text-sm text-red-500">{errors.phone.message}</p>
         )}
       </div>
-      <button className="w-full bg-indigo-500 rounded-lg p-1 mt-5">
-        Enviar
-      </button>
-    </form>
+    </>
   );
 }

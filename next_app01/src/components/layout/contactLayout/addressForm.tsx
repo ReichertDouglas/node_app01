@@ -1,35 +1,30 @@
 "use client";
 
 import { MapPin, MapIcon } from "lucide-react";
-import { contactFormSchema, type ContactFormData } from "@/lib/validator/formValidator";
 import { CEP_MASK } from "@/lib/mask/formMask";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller } from "react-hook-form";
 import { IMaskInput } from "react-imask";
-import { handleValidCPF } from "@/lib/service/api/apicpf";
+import { apicep } from "@/lib/service/api/apicep";
+import { FormComponentProps } from "./contactSection";
+
+  export default function AddressForm({ control, formState, setValue, setError }: FormComponentProps) {
+  const { errors } = formState;
 
 
-export default function AddressForm() {
-  const {
-    handleSubmit,
-    setError,
-    control,
-    formState: { errors },
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: { cep: "", logradouro: "", bairro: "", localidade: "", estado: "" },
-  });
-
-  const handleSubmitContact = (data: ContactFormData) => {
-    console.log("Dados enviados com sucesso", data);
-    return new Promise((resolve) => setTimeout(resolve, 2000));
+  const handleAddress = async (cep: string) => {
+    try {
+      const Address = await apicep(cep);
+      setValue("bairro", Address.bairro || "");
+      setValue("localidade", Address.cidade || "");
+      setValue("estado", Address.estado || "");
+      setValue("logradouro", Address.rua || "");
+    } catch (error) {
+      setError("cep", { type: "manual", message: (error as Error).message });
+    }
   };
 
   return (
-    <form
-      className="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto text-center"
-      onSubmit={handleSubmit(handleSubmitContact)}
-    >
+    <>
       <div>
         <label className="block text-gray-700 font-bold" htmlFor="cep">
           CEP
@@ -48,17 +43,16 @@ export default function AddressForm() {
                 id="cep"
                 {...field}
                 className="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                placeholder="000.000.000-00"
+                placeholder="00000-00"
                 onBlur={async (e) => {
-                  const message = await handleValidCPF(e.currentTarget.value);
-                  setError("cpf", {type: "manual", message})
+                  handleAddress(e.target.value);
                 }}
               />
             )}
           />
         </div>
-        {errors.name && (
-          <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
+        {errors.cep && (
+          <p className="mt-2 text-sm text-red-500">{errors.cep.message}</p>
         )}
       </div>
       <div className="mt-3">
@@ -165,9 +159,6 @@ export default function AddressForm() {
           <p className="mt-2 text-sm text-red-500">{errors.cpf.message}</p>
         )}
       </div>
-      <button className="w-full bg-indigo-500 rounded-lg p-1 mt-5">
-        Enviar
-      </button>
-    </form>
+    </>
   );
 }
